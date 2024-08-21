@@ -3,7 +3,6 @@ import { useRef } from "react";
 export default function Answers({ answers, selectedAnswer, answerState, onSelect }) {
   const shaffledAnswers = useRef();
 
-
   if (!shaffledAnswers.current) {
     shaffledAnswers.current = [...answers];
     shaffledAnswers.current.sort(() => Math.random() - 0.5);
@@ -19,13 +18,14 @@ export default function Answers({ answers, selectedAnswer, answerState, onSelect
           cssClasses = 'selected';
         }
 
-        if (answerState === 'correct' || answerState === 'wrong' && isSelected) {
+        if ((answerState === 'correct' || answerState === 'wrong') && isSelected) {
           cssClasses = answerState;
         }
 
         return <li key={answer} className="answer">
           <button onClick={() => onSelect(answer)}
             className={cssClasses}
+            disabled={answerState !== ''}
           >{answer}</button>
         </li>
       })}
